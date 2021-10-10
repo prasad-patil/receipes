@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-xs-12">
+    <img
+      [src]="receipe?.imagePath"
+      alt=""
+      class="img-responsive"
+      style="max-width: 300px"
+    />
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h2>{{ receipe?.name }}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="dropdown" [appDropdown]="dropDownMenu">
+        <button
+          type="button"
+          (click)="onShoppingListClick()"
+          class="btn btn-primary dropdown-toggle"
+        >
+          Manage receipe
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" #dropDownMenu>
+          <li>
+            <a class="btn dropdown-item" role="button" href="#"
+              >To shoppling list</a
+            >
+          </li>
+          <li>
+            <a class="btn dropdown-item" role="button" href="#">Edit Receipe</a>
+          </li>
+          <li>
+            <a class="btn dropdown-item" role="button" href="#"
+              >Delete Receipe</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">{{ receipe?.description }}</div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-xs-12">
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let ingredient of receipe.ingredients"
+      >
+        {{ ingredient.name }} - {{ ingredient.amount }}
+      </li>
+    </ul>
+  </div>
+</div>

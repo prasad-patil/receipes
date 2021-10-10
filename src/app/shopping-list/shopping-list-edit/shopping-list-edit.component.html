@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-xs-12 pt-3">
+    <form>
+      <div class="row">
+        <div class="col col-sm-5">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="Name of the ingredient"
+              #ingredient
+            />
+          </div>
+        </div>
+        <div class="col col-sm-2">
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input
+              type="number"
+              class="form-control"
+              id="amount"
+              placeholder="Amount"
+              #amount
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <button
+            class="btn btn-success btn-space"
+            type="submit"
+            (click)="addItem($event)"
+          >
+            Add
+          </button>
+          <button class="btn btn-danger btn-space" type="button">Delete</button>
+          <button
+            class="btn btn-primary btn-space"
+            type="button"
+            (click)="clearItem()"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

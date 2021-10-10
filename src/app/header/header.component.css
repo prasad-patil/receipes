@@ -1,0 +1,14 @@
+.header-contianer {
+  padding: 0.5rem;
+  margin-right: 0;
+  margin-left: 0;
+  border-width: 0.2rem;
+}
+
+.mr-auto {
+  margin-right: auto !important;
+}
+
+.navbar {
+  padding: 15px;
+}
