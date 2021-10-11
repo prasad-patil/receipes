@@ -6,6 +6,7 @@ import {
   SimpleChange,
   SimpleChanges,
 } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Receipe } from '../receipe.modal';
 import { ReceipesService } from '../receipes.service';
 
@@ -14,17 +15,19 @@ import { ReceipesService } from '../receipes.service';
   templateUrl: './receipe-detail.component.html',
   styleUrls: ['./receipe-detail.component.css'],
 })
-export class ReceipeDetailComponent implements OnInit, OnChanges {
-  @Input('receipe')
+export class ReceipeDetailComponent implements OnInit {
   receipe: Receipe;
 
-  constructor(private receipeService: ReceipesService) {}
+  constructor(
+    private receipeService: ReceipesService,
+    private route: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void {}
-
-  ngOnChanges(change: SimpleChanges) {
-    console.log(this.receipe);
-    console.log('changes', change);
+  ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      const id = params['id'];
+      this.receipe = this.receipeService.getReceipe(+id);
+    });
   }
 
   onShoppingListClick() {

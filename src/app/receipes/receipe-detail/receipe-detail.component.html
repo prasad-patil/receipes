@@ -1,11 +1,6 @@
 <div class="row">
   <div class="col-xs-12">
-    <img
-      [src]="receipe?.imagePath"
-      alt=""
-      class="img-responsive"
-      style="max-width: 300px"
-    />
+    <img [src]="receipe?.imagePath" alt="" class="img-responsive" />
   </div>
   <div class="row">
     <div class="col-xs-12">
@@ -30,7 +25,9 @@
             >
           </li>
           <li>
-            <a class="btn dropdown-item" role="button" href="#">Edit Receipe</a>
+            <a class="btn dropdown-item" role="button" [routerLink]="['edit']"
+              >Edit Receipe</a
+            >
           </li>
           <li>
             <a class="btn dropdown-item" role="button" href="#"
@@ -52,9 +49,9 @@
     <ul class="list-group">
       <li
         class="list-group-item"
-        *ngFor="let ingredient of receipe.ingredients"
+        *ngFor="let ingredient of receipe?.ingredients"
       >
-        {{ ingredient.name }} - {{ ingredient.amount }}
+        {{ ingredient?.name }} - {{ ingredient?.amount }}
       </li>
     </ul>
   </div>

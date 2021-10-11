@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Receipe } from '../receipe.modal';
 import { ReceipesService } from '../receipes.service';
 
@@ -7,18 +14,18 @@ import { ReceipesService } from '../receipes.service';
   templateUrl: './receipe-item.component.html',
   styleUrls: ['./receipe-item.component.css'],
 })
-export class ReceipeItemComponent implements OnInit {
-  @Input('receipe')
+export class ReceipeItemComponent implements OnInit, OnChanges {
+  @Input('id')
+  id: number | undefined;
+
   receipe: Receipe;
-
-  // @Output('onReceipeSelected')
-  // onReceipeSelected: EventEmitter<Receipe> = new EventEmitter<Receipe>();
-
   constructor(private receipeService: ReceipesService) {}
 
   ngOnInit(): void {}
 
-  onSelected(receipe: Receipe) {
-    this.receipeService.selectedReceipe.emit(receipe);
+  ngOnChanges() {
+    if (this.id !== undefined) {
+      this.receipe = this.receipeService.getReceipe(this.id);
+    }
   }
 }

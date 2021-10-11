@@ -14,6 +14,8 @@ import { UnlessDirective } from './shared/unless.directive';
 import { DropDownDirective } from './shared/dropdown.directive';
 import { ReceipesService } from './receipes/receipes.service';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
+import { ReceipesStartComponent } from './receipes/receipes-start/receipes-start.component';
+import { ReceipeEditComponent } from './receipes/receipe-edit/receipe-edit.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { ShoppingListService } from './shopping-list/shopping-list.service';
     ReceipeDetailComponent,
     UnlessDirective,
     DropDownDirective,
+    ReceipesStartComponent,
+    ReceipeEditComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   bootstrap: [AppComponent],

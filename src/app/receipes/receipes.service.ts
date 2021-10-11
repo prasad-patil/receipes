@@ -12,6 +12,7 @@ export class ReceipesService {
   constructor(private shoppingListService: ShoppingListService) {
     this.receipes = [
       new Receipe(
+        0,
         'Dal Tadka',
         'Delecious Dat Tadka',
         'https://cdn.loveandlemons.com/wp-content/uploads/2020/03/pantry-recipes-2.jpg',
@@ -23,6 +24,7 @@ export class ReceipesService {
         ]
       ),
       new Receipe(
+        1,
         'Samosa',
         'Tasty Samosa',
         'https://www.indianhealthyrecipes.com/wp-content/uploads/2019/11/samosa-recipe-480x270.jpg',
@@ -40,6 +42,10 @@ export class ReceipesService {
 
   getReceipes(): Receipe[] {
     return this.receipes;
+  }
+
+  getReceipe(id: number): Receipe {
+    return this.receipes[id];
   }
 
   addReceipe(receipe: Receipe) {
