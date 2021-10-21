@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12 pt-3">
-    <form>
+    <form #ingredientForm="ngForm" (ngSubmit)="onSubmit(ingredientForm.value)">
       <div class="row">
         <div class="col col-sm-5">
           <div class="form-group">
@@ -10,8 +10,16 @@
               class="form-control"
               id="name"
               placeholder="Name of the ingredient"
-              #ingredient
+              name="name"
+              #name="ngModel"
+              ngModel
+              required
             />
+            <span
+              class="text-danger help-block"
+              *ngIf="name.invalid && name.touched"
+              >Please enter a valid ingredient name</span
+            >
           </div>
         </div>
         <div class="col col-sm-2">
@@ -22,21 +30,37 @@
               class="form-control"
               id="amount"
               placeholder="Amount"
-              #amount
+              name="amount"
+              #amount="ngModel"
+              ngModel
+              required
+              pattern="^[1-9]+[0-9]*$"
             />
+            <span
+              class="text-danger help-block"
+              *ngIf="amount.invalid && amount.touched"
+              >Please enter a valid amount for the ingredient</span
+            >
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
           <button
+            [disabled]="ingredientForm.invalid"
             class="btn btn-success btn-space"
             type="submit"
-            (click)="addItem($event)"
           >
-            Add
+            {{ editMode ? "Update" : "Add" }}
           </button>
-          <button class="btn btn-danger btn-space" type="button">Delete</button>
+          <button
+            class="btn btn-danger btn-space"
+            type="button"
+            [disabled]="!editMode"
+            (click)="deleteItem()"
+          >
+            Delete
+          </button>
           <button
             class="btn btn-primary btn-space"
             type="button"

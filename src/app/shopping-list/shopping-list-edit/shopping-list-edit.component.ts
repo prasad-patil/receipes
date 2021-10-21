@@ -6,6 +6,7 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/ingredients.model';
 import { ShoppingListService } from '../shopping-list.service';
 
@@ -15,33 +16,48 @@ import { ShoppingListService } from '../shopping-list.service';
   styleUrls: ['./shopping-list-edit.component.css'],
 })
 export class ShoppingListEditComponent implements OnInit {
-  // @Output('onIngredientAdd') addIngredient: EventEmitter<Ingredient> =
-  //   new EventEmitter<Ingredient>();
+  editMode: Boolean = false;
+  editIngredientIndex: number;
 
-  @ViewChild('ingredient') ingredientRef: ElementRef;
-  @ViewChild('amount') amountRef: ElementRef;
+  @ViewChild('ingredientForm', { static: false }) ingredientForm: NgForm;
+
   constructor(private shoppingListService: ShoppingListService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.shoppingListService
+      .getIngredientObservable()
+      .subscribe((index: number) => {
+        this.editMode = true;
+        this.editIngredientIndex = index;
+        let ingredient = this.shoppingListService.getIngredient(index);
+        if (ingredient) {
+          this.ingredientForm.form.setValue({
+            ...ingredient,
+          });
+        }
+      });
+  }
 
-  addItem(event: Event) {
-    event.preventDefault();
-    // this.addIngredient.emit(
-    //   new Ingredient(
-    //     this.ingredientRef.nativeElement.value,
-    //     this.ingredientRef.nativeElement.value
-    //   )
-    // );
-    this.shoppingListService.addIngredient(
-      new Ingredient(
-        this.ingredientRef.nativeElement.value,
-        this.amountRef.nativeElement.value
-      )
-    );
+  onSubmit({ name, amount }: Ingredient) {
+    this.editMode
+      ? this.shoppingListService.editIngredient(
+          this.editIngredientIndex,
+          new Ingredient(name, amount)
+        )
+      : this.shoppingListService.addIngredient(new Ingredient(name, amount));
+    this.clearItem();
   }
 
   clearItem() {
-    this.ingredientRef.nativeElement.value = '';
-    this.amountRef.nativeElement.value = '';
+    // this.ingredientRef.nativeElement.value = '';
+    // this.amountRef.nativeElement.value = '';
+    this.ingredientForm.form.reset();
+    this.editMode = false;
+    this.editIngredientIndex = -1;
+  }
+
+  deleteItem() {
+    this.shoppingListService.deleteIngredient(this.editIngredientIndex);
+    this.clearItem();
   }
 }
