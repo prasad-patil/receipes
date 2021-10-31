@@ -10,17 +10,16 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="dropdown" [appDropdown]="dropDownMenu">
-        <button
-          type="button"
-          (click)="onShoppingListClick()"
-          class="btn btn-primary dropdown-toggle"
-        >
+        <button type="button" class="btn btn-primary dropdown-toggle">
           Manage receipe
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" #dropDownMenu>
           <li>
-            <a class="btn dropdown-item" role="button" href="#"
+            <a
+              class="btn dropdown-item"
+              role="button"
+              (click)="onToShoppingListClicked()"
               >To shoppling list</a
             >
           </li>
@@ -30,7 +29,10 @@
             >
           </li>
           <li>
-            <a class="btn dropdown-item" role="button" href="#"
+            <a
+              class="btn dropdown-item"
+              role="button"
+              (click)="onDeleteClicked()"
               >Delete Receipe</a
             >
           </li>

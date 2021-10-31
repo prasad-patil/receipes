@@ -3,3 +3,15 @@
 a {
   cursor: pointer;
 }
+
+.mr-10 {
+  margin-right: 10px;
+}
+.mr-5 {
+  margin-right: 5px;
+}
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 1px solid red;
+}

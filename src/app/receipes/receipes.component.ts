@@ -6,7 +6,6 @@ import { ReceipesService } from './receipes.service';
   selector: 'app-receipes',
   templateUrl: './receipes.component.html',
   styleUrls: ['./receipes.component.css'],
-  providers: [ReceipesService],
 })
 export class ReceipesComponent implements OnInit {
   constructor() {}

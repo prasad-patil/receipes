@@ -6,7 +6,8 @@ import {
   SimpleChange,
   SimpleChanges,
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
 import { Receipe } from '../receipe.modal';
 import { ReceipesService } from '../receipes.service';
 
@@ -20,7 +21,9 @@ export class ReceipeDetailComponent implements OnInit {
 
   constructor(
     private receipeService: ReceipesService,
-    private route: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute,
+    private shoppingListServie: ShoppingListService
   ) {}
 
   ngOnInit(): void {
@@ -32,5 +35,15 @@ export class ReceipeDetailComponent implements OnInit {
 
   onShoppingListClick() {
     this.receipeService.addIngredientsToShoppingList(this.receipe.ingredients);
+  }
+
+  onDeleteClicked() {
+    this.receipeService.deleteReceipe(this.receipe.id);
+    this.router.navigate(['/receipes']);
+  }
+
+  onToShoppingListClicked() {
+    this.shoppingListServie.addIngredients(this.receipe.ingredients);
+    this.router.navigate(['/shopping-list']);
   }
 }

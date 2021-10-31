@@ -1,3 +1,8 @@
 .btn-space {
   margin: 10px 10px 0 0;
 }
+
+.img-responsive {
+  width: 450 px;
+  max-height: 300 px;
+}

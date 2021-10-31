@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredients.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Receipe } from './receipe.modal';
@@ -7,7 +8,8 @@ import { Receipe } from './receipe.modal';
 export class ReceipesService {
   receipes: Receipe[] = [];
 
-  selectedReceipe: EventEmitter<Receipe>;
+  private receipeListUpdated: Subject<Receipe[]> = new Subject();
+  receipeListUpdated$: Observable<Receipe[]>;
 
   constructor(private shoppingListService: ShoppingListService) {
     this.receipes = [
@@ -17,10 +19,10 @@ export class ReceipesService {
         'Delecious Dat Tadka',
         'https://cdn.loveandlemons.com/wp-content/uploads/2020/03/pantry-recipes-2.jpg',
         [
-          new Ingredient('Tur Dal', 1.5),
-          new Ingredient('Green Chilli', 1.5),
-          new Ingredient('Onion', 0.5),
-          new Ingredient('Turmeric', 0.25),
+          new Ingredient('Tur Dal', 1),
+          new Ingredient('Green Chilli', 1),
+          new Ingredient('Onion', 22),
+          new Ingredient('Turmeric', 33),
         ]
       ),
       new Receipe(
@@ -31,17 +33,19 @@ export class ReceipesService {
         [
           new Ingredient('Potato', 2),
           new Ingredient('Maida', 1),
-          new Ingredient('Oil', 1.5),
-          new Ingredient('Green Chilli', 0.25),
+          new Ingredient('Oil', 1),
+          new Ingredient('Green Chilli', 2),
         ]
       ),
     ];
-
-    this.selectedReceipe = new EventEmitter<Receipe>();
   }
 
   getReceipes(): Receipe[] {
-    return this.receipes;
+    return this.receipes.slice();
+  }
+
+  getReceipes$(): Observable<Receipe[]> {
+    return this.receipeListUpdated.asObservable();
   }
 
   getReceipe(id: number): Receipe {
@@ -49,10 +53,24 @@ export class ReceipesService {
   }
 
   addReceipe(receipe: Receipe) {
+    receipe.id = this.receipes.length;
     this.receipes.push(receipe);
+    this.receipeListUpdated.next(this.receipes);
+  }
+
+  updateReceipe(index: number, newReceipe: Receipe) {
+    newReceipe.id = index;
+    this.receipes[index] = newReceipe;
+    this.receipeListUpdated.next(this.receipes);
+  }
+
+  deleteReceipe(index: number) {
+    this.receipes.splice(index, 1);
+    this.receipeListUpdated.next(this.receipes);
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients);
+    this.receipeListUpdated.next(this.receipes);
   }
 }

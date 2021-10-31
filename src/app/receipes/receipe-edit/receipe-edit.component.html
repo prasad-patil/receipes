@@ -1,1 +1,101 @@
-<p>receipe-edit works!</p>
+<form (ngSubmit)="submit()" [formGroup]="receipeForm">
+  <div class="form-group row pb-2">
+    <div class="col-sm-10">
+      <button
+        [disabled]="!receipeForm.valid"
+        type="submit"
+        class="btn btn-success m-r-1"
+      >
+        Save
+      </button>
+      <button type="submit" class="btn btn-danger">Cancel</button>
+    </div>
+  </div>
+  <div class="form-group pt-1 pb-1">
+    <label for="receipe-name">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="receipe-name"
+      placeholder="Receipe name"
+      formControlName="name"
+    />
+  </div>
+  <div class="form-group pt-1 pb-1">
+    <label for="description">Description</label>
+    <textarea
+      class="form-control"
+      id="description"
+      placeholder="description"
+      rows="3"
+      formControlName="description"
+    ></textarea>
+  </div>
+  <div class="form-group pt-1 pb-1">
+    <label for="imgae-path">Image Path</label>
+    <input
+      type="text"
+      class="form-control"
+      id="image-path"
+      placeholder="Paste the image path"
+      formControlName="imagePath"
+      #imagePath
+    />
+  </div>
+  <div class="row" *ngIf="imagePath.value !== ''">
+    <div class="col-xs-12">
+      <img [src]="imagePath.value" class="img-fluid img-responsive mt-2 mb-2" />
+    </div>
+  </div>
+  <fieldset>
+    <legend>Add the Ingredient</legend>
+    <div
+      formArrayName="ingredients"
+      *ngFor="
+        let otherIngredient of ingredientFormGroupArray.controls;
+        let i = index
+      "
+    >
+      <div class="form-row pt-1 pb-1" [formGroupName]="i">
+        <div class="form-group col-7 mr-10">
+          <input
+            type="text"
+            placeholder="Ingredient Name"
+            class="form-control"
+            id="ingredient-name"
+            formControlName="name"
+          />
+        </div>
+        <div class="form-group col-3 mr-10">
+          <input
+            type="number"
+            class="form-control"
+            id="amount"
+            placeholder="Amount"
+            formControlName="amount"
+          />
+        </div>
+        <div class="form-group col">
+          <button
+            class="btn btn-danger mr-5"
+            style="width: 47%"
+            (click)="deleteIngredient($event, i)"
+          >
+            X
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <button
+          class="btn btn-primary mt-3"
+          type="button"
+          (click)="addIngredient($event)"
+        >
+          Add new ingredient
+        </button>
+      </div>
+    </div>
+  </fieldset>
+</form>

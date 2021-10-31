@@ -1,0 +1,13 @@
+.m-r-1 {
+  margin-right: 15px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+legend {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
