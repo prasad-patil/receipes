@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Receipe } from '../receipe.modal';
 import { ReceipesService } from '../receipes.service';
@@ -8,7 +14,7 @@ import { ReceipesService } from '../receipes.service';
   templateUrl: './receipe-list.component.html',
   styleUrls: ['./receipe-list.component.css'],
 })
-export class ReceipeListComponent implements OnInit {
+export class ReceipeListComponent implements OnInit, OnDestroy {
   receipes: Receipe[] = [];
 
   // @Output('receipeWasSelected')
@@ -22,6 +28,10 @@ export class ReceipeListComponent implements OnInit {
     this.receipeListSubscription = this.receipeService
       .getReceipes$()
       .subscribe((receipes: Receipe[]) => (this.receipes = receipes));
+  }
+
+  ngOnDestroy() {
+    this.receipeListSubscription.unsubscribe();
   }
 
   // onReceipeSelected(receipe: Receipe) {

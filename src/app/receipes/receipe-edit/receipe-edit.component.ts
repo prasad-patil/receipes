@@ -30,6 +30,7 @@ export class ReceipeEditComponent implements OnInit {
       this.initForm();
       console.log(this.editMode);
     });
+    this.initForm();
   }
 
   initForm() {
@@ -37,7 +38,7 @@ export class ReceipeEditComponent implements OnInit {
     let receipeImagePath: string = '';
     let receipeDescription: string = '';
     let receipeIngredients: FormArray = new FormArray([]);
-    if (this.editMode) {
+    if (this.editMode && this.receipe) {
       receipeName = this.receipe.name;
       receipeDescription = this.receipe.description;
       receipeImagePath = this.receipe.imagePath;

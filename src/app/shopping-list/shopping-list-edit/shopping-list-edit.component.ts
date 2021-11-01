@@ -5,8 +5,10 @@ import {
   EventEmitter,
   ViewChild,
   ElementRef,
+  OnDestroy,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { Ingredient } from 'src/app/shared/ingredients.model';
 import { ShoppingListService } from '../shopping-list.service';
 
@@ -15,16 +17,17 @@ import { ShoppingListService } from '../shopping-list.service';
   templateUrl: './shopping-list-edit.component.html',
   styleUrls: ['./shopping-list-edit.component.css'],
 })
-export class ShoppingListEditComponent implements OnInit {
+export class ShoppingListEditComponent implements OnInit, OnDestroy {
   editMode: Boolean = false;
   editIngredientIndex: number;
+  ingredientSubscription: Subscription;
 
   @ViewChild('ingredientForm', { static: false }) ingredientForm: NgForm;
 
   constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
-    this.shoppingListService
+    this.ingredientSubscription = this.shoppingListService
       .getIngredientObservable()
       .subscribe((index: number) => {
         this.editMode = true;
@@ -59,5 +62,9 @@ export class ShoppingListEditComponent implements OnInit {
   deleteItem() {
     this.shoppingListService.deleteIngredient(this.editIngredientIndex);
     this.clearItem();
+  }
+
+  ngOnDestroy() {
+    this.ingredientSubscription.unsubscribe();
   }
 }

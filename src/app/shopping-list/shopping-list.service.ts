@@ -8,8 +8,8 @@ export class ShoppingListService {
 
   ingredientsListChanged: Subject<Ingredient[]>;
   ingredients: Ingredient[] = [
-    new Ingredient('apple', 60),
-    new Ingredient('ginger', 50),
+    // new Ingredient('apple', 60),
+    // new Ingredient('ginger', 50),
   ];
 
   constructor() {
